@@ -2,6 +2,7 @@ package com.microservices.order.service;
 
 import com.microservices.order.client.InventoryClient;
 import com.microservices.order.dto.OrderRequest;
+import com.microservices.order.event.OrderPlacedEvent;
 import com.microservices.order.model.Order;
 import com.microservices.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,12 @@ public class OrderService {
 
             //save order to OrderRepository
             orderRepository.save(order);
+
+            // Send th message to Kafka topic
+            // orderNumber, email
+//            OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent(order.getOrderNumber(), orderRequest.);
+
+
         } else {
             throw new RuntimeException("Product with sku code " + orderRequest.skuCode() + " is not in stock");
         }
